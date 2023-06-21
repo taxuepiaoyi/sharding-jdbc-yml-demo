@@ -7,29 +7,3 @@ mybatis:
   typeAliasesPackage: com.sharding.table.entity
   configuration:
     map-underscore-to-camel-case: true
-
-spring:
-  shardingsphere:
-    datasource:
-      names: demo                                        # ???????????????????
-      demo:
-        type: com.alibaba.druid.pool.DruidDataSource            # Druid???
-        url: jdbc:mysql://127.0.0.1:3306/course_db?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC                  # ??demo?url
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        username: root
-        password: 12345678
-    sharding:
-      tables:
-        course:
-          actual-data-nodes: demo.course_$->{1..2}
-          key-generator:
-            column: cid
-            type: SNOWFLAKE
-          table-strategy:
-            inline:
-              sharding-column: user_id
-              algorithm-expression: course_$->{user_id % 2 + 1}
-    props:
-      sql:
-        show:
-          true                                                  # ??sql
