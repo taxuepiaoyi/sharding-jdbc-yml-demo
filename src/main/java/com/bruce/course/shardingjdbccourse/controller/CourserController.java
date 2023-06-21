@@ -20,4 +20,7 @@ public class CourserController {
     public boolean addCourse(@RequestParam("userId") long userId){
         return courseService.addCourse(userId) ;
     }
+
+    @GetMapping("addAll")
+    public boolean addAllUserCourse(){return courseService.addCourse();}
 }

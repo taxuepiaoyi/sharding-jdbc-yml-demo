@@ -21,13 +21,11 @@ spring:
     sharding:
       tables:
         course:
-          actual-data-nodes: demo.course_$->{1..2}        # ?????test$->{0..1}????test0?test1???
-          # user$->{0..2}??user0?user1?user2???
-          table-strategy:                                       # ????
+          actual-data-nodes: demo.course_$->{1..2}
+          table-strategy:
             inline:
-              sharding-column: cid                               # ??????????id???????"id"????
-              algorithm-expression: demo.course_->{cid%2 + 1}               # ?????id?3???id%3?0????user0?
-              # id%3?1????user1??id%3?2????user2?
+              sharding-column: cid
+              algorithm-expression: demo.course_->{cid%2 + 1}
     props:
       sql:
         show:

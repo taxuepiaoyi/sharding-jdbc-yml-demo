@@ -15,6 +15,14 @@
         values(#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus}) ;
     </insert>
 
+    <insert id="insertCourseList" >
+        insert into course(cname,user_id,created_time,cstatus)
+        values
+        <foreach collection="courseList" item="course" index="index" separator=",">
+            (#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus})
+        </foreach>
+    </insert>
+
     <update id="updateCourse" >
         update course set 1=1
         <if test="#{cname} != null" >
