@@ -39,9 +39,7 @@ public class CourseServiceImpl implements CourseService {
         log.info("addCourse.....userId:{}.....tableIndex:{}",userId, userId % 2 + 1);
         List<Course> courseList = generateCourseList(userId) ;
         if(!CollectionUtils.isEmpty(courseList)){
-            for (Course course:courseList) {
-                courseMapper.addCourse(course);
-            }
+            courseMapper.insertCourseList(courseList);
         }
         return true;
     }
