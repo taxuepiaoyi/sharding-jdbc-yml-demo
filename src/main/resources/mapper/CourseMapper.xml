@@ -10,13 +10,21 @@
         <result column="cstatus" property="cstatus" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <sql id="courseColumnSql" >
+        cname,user_id,created_time,cstatus
+    </sql>
+
     <insert id="addCourse" >
-        insert into course(cname,user_id,created_time,cstatus)
+        insert into course(
+        <include refid="courseColumnSql"></include>
+        )
         values(#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus}) ;
     </insert>
 
     <insert id="insertCourseList" >
-        insert into course(cname,user_id,created_time,cstatus)
+        insert into course(
+        <include refid="courseColumnSql"></include>
+        )
         values
         <foreach collection="courseList" item="course" index="index" separator=",">
             (#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus})
@@ -39,4 +47,20 @@
         </if>
         where cid = #{cid}
     </update>
+
+    <select id="queryCourse" resultMap="BaseResultMap" >
+        select
+        cid,
+        <include refid="courseColumnSql" />
+        from course c
+        where
+         1 = 1
+        <if test="#{courseQueryDTO.cname} != null" >
+            and  c.cname like concat('%',#{courseQueryDTO.cname},'%')
+        </if>
+        <if test="#{courseQueryDTO.userId} != null" >
+            and  c.user_id = #{courseQueryDTO.userId}
+        </if>
+    </select>
+
 </mapper>

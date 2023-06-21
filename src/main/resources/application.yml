@@ -25,7 +25,7 @@ spring:
           table-strategy:
             inline:
               sharding-column: cid
-              algorithm-expression: demo.course_->{cid%2 + 1}
+              algorithm-expression: demo.course_$->{cid%2 + 1}
     props:
       sql:
         show:
