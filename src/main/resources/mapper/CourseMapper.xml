@@ -6,19 +6,20 @@
         <id column="cid" property="cid" jdbcType="BIGINT"/>
         <result column="cname" property="cname" jdbcType="VARCHAR"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="start_month" property="startMonth" jdbcType="BIGINT"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
         <result column="cstatus" property="cstatus" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="courseColumnSql" >
-        cname,user_id,created_time,cstatus
+        cname,user_id,start_month,created_time,cstatus
     </sql>
 
     <insert id="addCourse" >
         insert into course(
         <include refid="courseColumnSql"></include>
         )
-        values(#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus}) ;
+        values(#{course.cname},#{course.userId},#{course.startMonth},#{course.createdTime},#{course.cstatus}) ;
     </insert>
 
     <insert id="insertCourseList" >
@@ -27,7 +28,7 @@
         )
         values
         <foreach collection="courseList" item="course" index="index" separator=",">
-            (#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus})
+            (#{course.cname},#{course.userId},#{course.startMonth},#{course.createdTime},#{course.cstatus})
         </foreach>
     </insert>
 

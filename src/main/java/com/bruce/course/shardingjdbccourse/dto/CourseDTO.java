@@ -28,6 +28,10 @@ public class CourseDTO implements Serializable {
      */
     private Long userId ;
     /**
+     * 课程开始月份
+     */
+    private Integer startMonth ;
+    /**
      * 创建时间
      */
     private LocalDateTime createdTime ;

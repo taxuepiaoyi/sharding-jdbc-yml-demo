@@ -11,6 +11,7 @@ import com.bruce.course.shardingjdbccourse.service.CourseService;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.ListUtils;
+import org.apache.velocity.runtime.parser.node.MathUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @Transactional
 @Service
@@ -83,12 +85,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private List<Course> generateCourseList(long userId){
+        Random random = new Random() ;
         List<String> courseNames = Arrays.asList("Java","JavaScript","phython","C","C++") ;
         List<Course> courseList = new ArrayList<>() ;
         for (String courseName:courseNames) {
             Course course = new Course();
             course.setCname(courseName);
             course.setUserId(userId);
+            course.setStartMonth(random.nextInt(12));
             course.setCstatus("Normal");
             course.setCreatedTime(LocalDateTime.now());
             courseList.add(course) ;
