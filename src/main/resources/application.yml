@@ -22,10 +22,13 @@ spring:
       tables:
         course:
           actual-data-nodes: demo.course_$->{1..2}
+          key-generator:
+            column: cid
+            type: SNOWFLAKE
           table-strategy:
             inline:
-              sharding-column: cid
-              algorithm-expression: demo.course_$->{cid%2 + 1}
+              sharding-column: user_id
+              algorithm-expression: demo.course_$->{user_id%2 + 1}
     props:
       sql:
         show:

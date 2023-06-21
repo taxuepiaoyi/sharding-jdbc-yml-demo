@@ -11,14 +11,14 @@
     </resultMap>
 
     <sql id="courseColumnSql" >
-        cname,user_id,created_time,cstatus
+        cid,cname,user_id,created_time,cstatus
     </sql>
 
     <insert id="addCourse" >
         insert into course(
         <include refid="courseColumnSql"></include>
         )
-        values(#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus}) ;
+        values(#{course.cid},#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus}) ;
     </insert>
 
     <insert id="insertCourseList" >
@@ -27,7 +27,7 @@
         )
         values
         <foreach collection="courseList" item="course" index="index" separator=",">
-            (#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus})
+            (#{course.cid},#{course.cname},#{course.userId},#{course.createdTime},#{course.cstatus})
         </foreach>
     </insert>
 
@@ -50,7 +50,6 @@
 
     <select id="queryCourse" resultMap="BaseResultMap" >
         select
-        cid,
         <include refid="courseColumnSql" />
         from course c
         where
