@@ -28,7 +28,7 @@ spring:
           table-strategy:
             inline:
               sharding-column: user_id
-              algorithm-expression: demo.course_$->{user_id%2 + 1}
+              algorithm-expression: course_$->{user_id % 2 + 1}
     props:
       sql:
         show:

@@ -36,10 +36,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean addCourse(long userId) {
-        log.info("addCourse.....userId:{}",userId);
+        log.info("addCourse.....userId:{}.....tableIndex:{}",userId, userId % 2 + 1);
         List<Course> courseList = generateCourseList(userId) ;
         if(!CollectionUtils.isEmpty(courseList)){
-            courseMapper.insertCourseList(courseList);
+            for (Course course:courseList) {
+                courseMapper.addCourse(course);
+            }
         }
         return true;
     }
