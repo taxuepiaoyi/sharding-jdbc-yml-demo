@@ -3,15 +3,13 @@ package com.bruce.course.shardingjdbccourse.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.bruce.course.shardingjdbccourse.dto.CourseDTO;
 import com.bruce.course.shardingjdbccourse.entity.Course;
-import com.bruce.course.shardingjdbccourse.entity.UserEntity;
+import com.bruce.course.shardingjdbccourse.feign.CustomerService;
 import com.bruce.course.shardingjdbccourse.mapper.CourseMapper;
-import com.bruce.course.shardingjdbccourse.mapper.UserMapper;
 import com.bruce.course.shardingjdbccourse.query.CourseQueryDTO;
 import com.bruce.course.shardingjdbccourse.service.CourseService;
-import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.bruce.shardingjdbc.customer.dto.UserDTO;
+import com.bruce.shardingjdbc.customer.query.UserQueryDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.ListUtils;
-import org.apache.velocity.runtime.parser.node.MathUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseMapper courseMapper ;
 
     @Resource
-    private UserMapper userMapper ;
+    private CustomerService customerService ;
 
     @Override
     public boolean addCourse(long userId) {
@@ -49,14 +47,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public boolean addCourse() {
         log.info("addCourse all user........");
-        List<UserEntity> userEntities = userMapper.queryAllUser() ;
-        if(CollectionUtils.isEmpty(userEntities)){
-            log.info("addCourse... userEntities is empty....");
+        UserQueryDTO userQueryDTO = UserQueryDTO.builder().build() ;
+        List<UserDTO> userDTOList = customerService.queryUserList(userQueryDTO) ;
+        if(CollectionUtils.isEmpty(userDTOList)){
+            log.info("addCourse... userDTOList is empty....");
             return true ;
         }
         List<Course> courseList = new ArrayList<>() ;
-        for (UserEntity userEntity: userEntities) {
-            courseList.addAll(this.generateCourseList(userEntity.getUserId())) ;
+        for (UserDTO userDTO: userDTOList) {
+            courseList.addAll(this.generateCourseList(userDTO.getUserId())) ;
         }
         if(!CollectionUtils.isEmpty(courseList)){
             courseMapper.insertCourseList(courseList);
