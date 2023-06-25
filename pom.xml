@@ -30,11 +30,26 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Spring Cloud御用负载均衡组件Loadbalancer -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+
         <!-- Nacos服务发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>2021.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.netflix.ribbon</groupId>
+                    <artifactId>ribbon</artifactId>
+                </exclusion>
+            </exclusions>
+
         </dependency>
 
         <!-- Nacos Config -->
@@ -55,20 +70,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>2.2.4.RELEASE</version>
-        </dependency>
-        <!-- hystrix组件，专门用来演示openfeign降级 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-            <version>2.2.10.RELEASE</version>
-            <exclusions>
-                <!-- 移除Ribbon负载均衡器 -->
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-netflix-ribbon</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>3.0.1</version>
         </dependency>
 
         <dependency>

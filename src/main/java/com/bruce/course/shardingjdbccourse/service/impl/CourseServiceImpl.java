@@ -3,7 +3,7 @@ package com.bruce.course.shardingjdbccourse.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.bruce.course.shardingjdbccourse.dto.CourseDTO;
 import com.bruce.course.shardingjdbccourse.entity.Course;
-import com.bruce.course.shardingjdbccourse.feign.CustomerService;
+import com.bruce.course.shardingjdbccourse.feign.UserFeignService;
 import com.bruce.course.shardingjdbccourse.mapper.CourseMapper;
 import com.bruce.course.shardingjdbccourse.query.CourseQueryDTO;
 import com.bruce.course.shardingjdbccourse.service.CourseService;
@@ -11,6 +11,7 @@ import com.bruce.shardingjdbc.customer.dto.UserDTO;
 import com.bruce.shardingjdbc.customer.query.UserQueryDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -32,7 +33,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseMapper courseMapper ;
 
     @Resource
-    private CustomerService customerService ;
+    private UserFeignService userFeignService;
 
     @Override
     public boolean addCourse(long userId) {
@@ -48,7 +49,7 @@ public class CourseServiceImpl implements CourseService {
     public boolean addCourse() {
         log.info("addCourse all user........");
         UserQueryDTO userQueryDTO = UserQueryDTO.builder().build() ;
-        List<UserDTO> userDTOList = customerService.queryUserList(userQueryDTO) ;
+        List<UserDTO> userDTOList = userFeignService.queryUserList(userQueryDTO) ;
         if(CollectionUtils.isEmpty(userDTOList)){
             log.info("addCourse... userDTOList is empty....");
             return true ;
